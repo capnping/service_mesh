@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: services-app-v2
+  labels:
+    app: services-app-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: services-app-v2
+  template:
+    metadata:
+      labels:
+        app: services-app-v2
+    spec:
+      containers:
+      - name: services-app-v2
+        image: deepakrico/services:v2
+        command: ["gunicorn", "--bind", "0.0.0.0:5001", "runner:app"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5001
+        env:
+        - name: VER
+          value: "V2"
+        - name: RT
+          value: "N"
+        - name: search_svc
+          value: "search-app-svc-v1"
+        - name: search_svc_port
+          value: "5000"
+        - name: email_svc
+          value: "email-app-svc-v1"
+        - name: email_svc_port
+          value: "5000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: services-app-service-v2
+  labels:
+    app: services-app-service-v2
+spec:
+  selector:
+    app: services-app-v2
+  type: ClusterIP             # LoadBalancer OR ClusterIP(Default) OR NodePort
+  ports:
+    - protocol: TCP
+      port: 5001              # External connection
+      targetPort: 5001        # Internal POD connection
+      name: http-app
