@@ -1,1 +1,6 @@
-
+{
+  "name":"War and Peace",
+  "author":"Leo",
+  "publisher": "Goodreads",
+  "is_available": true
+}
