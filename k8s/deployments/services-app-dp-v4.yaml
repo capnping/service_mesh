@@ -33,10 +33,10 @@ spec:
         - name: email_svc
           value: "email-app-svc-v1"
         - name: email_svc_port
-          value: "5000"                
-        - name: price_server
+          value: "5000"
+        - name: price_srv
           value: "price-server-v1"
-        - name: price_server_port
+        - name: price_srv_port
           value: "5005"
 ---
 apiVersion: v1
