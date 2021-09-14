@@ -3,7 +3,8 @@ kind: Deployment
 metadata:
   name: price-server-v1
   labels:
-    app: price-server-v1
+    app: price-server
+    release: 1
 spec:
   replicas: 1
   selector:
@@ -26,24 +27,49 @@ spec:
           value: "v1"
         - name: RT
           value: "N"
-        - name: search_svc
-          value: "search-app-svc-v1"
-        - name: search_svc_port
-          value: "5000"
-        - name: email_svc
-          value: "email-app-svc-v1"
-        - name: email_svc_port
-          value: "5000"
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: price-server-v2
+  labels:
+    app: price-server
+    release: 2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: price-server-v2
+  template:
+    metadata:
+      labels:
+        app: price-server-v2
+    spec:
+      containers:
+      - name: price-server-v2
+        image: deepakrico/price_server:v2
+        command: ["gunicorn", "--bind", "0.0.0.0:5005", "price_runner:app"]
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5005
+        env:
+        - name: VER
+          value: "v2"
+        - name: RT
+          value: "N"
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: price-server-v1
+  name: price-server
   labels:
-    app: price-server-v1
+    app: price-server
 spec:
   selector:
-    app: price-server-v1
+    app: price-server
+    release: 1
   type: ClusterIP             # LoadBalancer OR ClusterIP(Default) OR NodePort
   ports:
     - protocol: TCP
