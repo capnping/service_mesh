@@ -35,7 +35,7 @@ spec:
         - name: email_svc_port
           value: "5000"
         - name: price_srv
-          value: "price-server-v1"
+          value: "price-server"
         - name: price_srv_port
           value: "5005"
 ---
