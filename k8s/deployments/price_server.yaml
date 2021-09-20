@@ -13,7 +13,6 @@ spec:
     metadata:
       labels:
         app: price-server
-        release: "1.0"
     spec:
       containers:
       - name: price-server-v1
@@ -44,7 +43,6 @@ spec:
     metadata:
       labels:
         app: price-server
-        release: "2.0"
     spec:
       containers:
       - name: price-server-v2
@@ -69,7 +67,6 @@ metadata:
 spec:
   selector:
     app: price-server
-    release: "2.0"
   type: ClusterIP             # LoadBalancer OR ClusterIP(Default) OR NodePort
   ports:
     - protocol: TCP
