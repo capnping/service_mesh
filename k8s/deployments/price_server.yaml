@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         app: price-server
+        version: low
     spec:
       containers:
       - name: price-server-v1
@@ -43,6 +44,7 @@ spec:
     metadata:
       labels:
         app: price-server
+        version: high
     spec:
       containers:
       - name: price-server-v2
